@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TimeBandChecker_Test
 {
     [TestClass]
-    public class UnitTest1
+    public class TimebandsTest
     {
         [TestMethod]
         public void ValidTimeTest()
