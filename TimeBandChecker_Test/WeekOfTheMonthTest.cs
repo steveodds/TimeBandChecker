@@ -2,7 +2,8 @@
 
 namespace TimeBandChecker_Test
 {
-    class WeekOfTheMonthTest
+    [TestClass]
+    public class WeekOfTheMonthTest
     {
         [TestMethod]
         public void BasicDate()
