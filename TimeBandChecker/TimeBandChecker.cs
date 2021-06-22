@@ -9,7 +9,7 @@ namespace TimeBandChecker
 {
     public class TimeBandChecker
     {
-        public bool isROS(string timebandStart, string timebandEnd, string ipsosTime)
+        public bool IsROS(string timebandStart, string timebandEnd, string ipsosTime)
         {
             if (string.IsNullOrWhiteSpace(timebandStart) || string.IsNullOrWhiteSpace(timebandEnd))
                 return false;
@@ -29,8 +29,9 @@ namespace TimeBandChecker
             var overshot = ipsos - tbEnd;
             var undershot = tbStart - ipsos;
             TimeSpan threshold = new TimeSpan(0, 30, 0);
+            bool isWithinRange = ipsos.TimeOfDay >= tbStart.TimeOfDay && ipsos.TimeOfDay <= tbEnd.TimeOfDay;
 
-            return overshot <= threshold || undershot <= threshold;
+            return (overshot.Duration() <= threshold && !isWithinRange) || (undershot.Duration() <= threshold && !isWithinRange);
         }
 
 
@@ -83,7 +84,7 @@ namespace TimeBandChecker
 
     public static class DateTimeExtensions
     {
-        private static GregorianCalendar _gc = new GregorianCalendar();
+        private static readonly GregorianCalendar _gc = new GregorianCalendar();
         public static int GetWeekOfMonth(this DateTime time)
         {
             DateTime first = new DateTime(time.Year, time.Month, 1);
