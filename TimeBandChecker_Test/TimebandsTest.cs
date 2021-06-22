@@ -77,5 +77,65 @@ namespace TimeBandChecker_Test
             Assert.IsFalse(result);
         }
 
+        //ROS TESTS
+        [TestMethod]
+        public void ValidROSValue()
+        {
+            var timebandStart = "9AM";
+            var timebandEnd = "10am";
+            var ipsos = "10:22";
+
+            var checker = new TimeBandChecker.TimeBandChecker();
+            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ValidUnderROSValue()
+        {
+            var timebandStart = "10:30AM";
+            var timebandEnd = "11:00am";
+            var ipsos = "10:22";
+
+            var checker = new TimeBandChecker.TimeBandChecker();
+            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void InvalidOverROSValue()
+        {
+            var timebandStart = "9AM";
+            var timebandEnd = "9:30am";
+            var ipsos = "10:22";
+
+            var checker = new TimeBandChecker.TimeBandChecker();
+            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void InvalidUnderROSValue()
+        {
+            var timebandStart = "11:30AM";
+            var timebandEnd = "12:30pm";
+            var ipsos = "10:22";
+
+            var checker = new TimeBandChecker.TimeBandChecker();
+            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void WithinRangeButNotROS()
+        {
+            var timebandStart = "9AM";
+            var timebandEnd = "10:30am";
+            var ipsos = "10:22";
+
+            var checker = new TimeBandChecker.TimeBandChecker();
+            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
+            Assert.IsFalse(result);
+        }
     }
 }
