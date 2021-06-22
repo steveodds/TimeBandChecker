@@ -9,6 +9,31 @@ namespace TimeBandChecker
 {
     public class TimeBandChecker
     {
+        public bool isROS(string timebandStart, string timebandEnd, string ipsosTime)
+        {
+            if (string.IsNullOrWhiteSpace(timebandStart) || string.IsNullOrWhiteSpace(timebandEnd))
+                return false;
+
+            bool isValidTime = DateTime.TryParse(TimeFormatter(timebandStart), out DateTime tbStart);
+            if (!isValidTime)
+                return false;
+
+            isValidTime = DateTime.TryParse(TimeFormatter(timebandEnd), out DateTime tbEnd);
+            if(!isValidTime)
+                return false;
+
+            isValidTime = DateTime.TryParse(ipsosTime, out DateTime ipsos);
+            if (!isValidTime)
+                return false;
+
+            var overshot = ipsos - tbEnd;
+            var undershot = tbStart - ipsos;
+            TimeSpan threshold = new TimeSpan(0, 30, 0);
+
+            return overshot <= threshold || undershot <= threshold;
+        }
+
+
         public bool IsWithinTimebandRange(string timebandStart, string timebandEnd, string ipsosTime)
         {
             if (string.IsNullOrWhiteSpace(timebandStart) || string.IsNullOrWhiteSpace(timebandEnd))
