@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeBandChecker
 {
-    class Adams
+    internal class Adams
     {
         public string Row { get; set; }
         public string VariantName { get; set; }
