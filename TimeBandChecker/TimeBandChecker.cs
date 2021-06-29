@@ -34,8 +34,14 @@ namespace TimeBandChecker
             return (overshot.Duration() <= threshold && !isWithinRange) || (undershot.Duration() <= threshold && !isWithinRange);
         }
 
+        public List<string> Reconcile(List<string> adamsList, List<string> ipsosList)
+        {
+            var reconciliator = new Reconciliator(adamsList, ipsosList);
+            
+            return reconciliator.Reconcile();
+        }
 
-        public bool IsWithinTimebandRange(string timebandStart, string timebandEnd, string ipsosTime)
+        /*public bool IsWithinTimebandRange(string timebandStart, string timebandEnd, string ipsosTime)
         {
             if (string.IsNullOrWhiteSpace(timebandStart) && string.IsNullOrWhiteSpace(timebandEnd))
                 return false;
@@ -59,7 +65,7 @@ namespace TimeBandChecker
                 tbEnd = tbEnd.Add(new TimeSpan(1, 0, 0));
 
             return ipsos.TimeOfDay >= tbStart.TimeOfDay && ipsos.TimeOfDay <= tbEnd.TimeOfDay;
-        }
+        }*/
 
         private string TimeFormatter(string time)
         {
