@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adams.cs" />
     <Compile Include="Reconciliator.cs" />
     <Compile Include="TimeBandChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
