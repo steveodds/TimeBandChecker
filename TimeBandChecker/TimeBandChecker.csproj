@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Adams.cs" />
     <Compile Include="Ipsos.cs" />
+    <Compile Include="Reconciled.cs" />
     <Compile Include="Reconciliator.cs" />
     <Compile Include="TimeBandChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
