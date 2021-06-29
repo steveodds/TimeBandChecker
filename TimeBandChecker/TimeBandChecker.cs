@@ -37,8 +37,11 @@ namespace TimeBandChecker
 
         public bool IsWithinTimebandRange(string timebandStart, string timebandEnd, string ipsosTime)
         {
-            if (string.IsNullOrWhiteSpace(timebandStart) || string.IsNullOrWhiteSpace(timebandEnd))
+            if (string.IsNullOrWhiteSpace(timebandStart) && string.IsNullOrWhiteSpace(timebandEnd))
                 return false;
+
+            if (!string.IsNullOrWhiteSpace(timebandStart) && string.IsNullOrWhiteSpace(timebandEnd))
+                timebandEnd = timebandStart;
 
             bool isValidTime = DateTime.TryParse(TimeFormatter(timebandStart), out DateTime tbStart);
             if (!isValidTime)
@@ -51,6 +54,9 @@ namespace TimeBandChecker
             isValidTime = DateTime.TryParse(ipsosTime, out DateTime ipsos);
             if (!isValidTime)
                 return false;
+
+            if (tbStart == tbEnd)
+                tbEnd = tbEnd.Add(new TimeSpan(1, 0, 0));
 
             return ipsos.TimeOfDay >= tbStart.TimeOfDay && ipsos.TimeOfDay <= tbEnd.TimeOfDay;
         }

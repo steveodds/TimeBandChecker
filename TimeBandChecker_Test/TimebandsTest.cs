@@ -9,7 +9,7 @@ namespace TimeBandChecker_Test
         public void ValidTimeTest()
         {
             var timebandStart = "9AM";
-            var timebandEnd= "9.30AM";
+            var timebandEnd= "";
             var ipsos = "09:22";
 
             var checker = new TimeBandChecker.TimeBandChecker();
