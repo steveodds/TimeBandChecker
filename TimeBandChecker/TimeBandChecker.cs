@@ -9,73 +9,25 @@ namespace TimeBandChecker
 {
     public class TimeBandChecker
     {
-        public bool IsROS(string timebandStart, string timebandEnd, string ipsosTime)
-        {
-            if (string.IsNullOrWhiteSpace(timebandStart) || string.IsNullOrWhiteSpace(timebandEnd))
-                return false;
-
-            bool isValidTime = DateTime.TryParse(TimeFormatter(timebandStart), out DateTime tbStart);
-            if (!isValidTime)
-                return false;
-
-            isValidTime = DateTime.TryParse(TimeFormatter(timebandEnd), out DateTime tbEnd);
-            if(!isValidTime)
-                return false;
-
-            isValidTime = DateTime.TryParse(ipsosTime, out DateTime ipsos);
-            if (!isValidTime)
-                return false;
-
-            var overshot = ipsos - tbEnd;
-            var undershot = tbStart - ipsos;
-            TimeSpan threshold = new TimeSpan(0, 30, 0);
-            bool isWithinRange = ipsos.TimeOfDay >= tbStart.TimeOfDay && ipsos.TimeOfDay <= tbEnd.TimeOfDay;
-
-            return (overshot.Duration() <= threshold && !isWithinRange) || (undershot.Duration() <= threshold && !isWithinRange);
-        }
 
         public List<string> Reconcile(List<string> adamsList, List<string> ipsosList)
         {
             var reconciliator = new Reconciliator(adamsList, ipsosList);
-            
-            return reconciliator.Reconcile();
+            var reconciled = reconciliator.Reconcile();
+            var finalRecords = ReconciledAsString(reconciled);
+
+            return finalRecords;
         }
 
-        /*public bool IsWithinTimebandRange(string timebandStart, string timebandEnd, string ipsosTime)
+        private List<string> ReconciledAsString(List<Reconciled> reconciled)
         {
-            if (string.IsNullOrWhiteSpace(timebandStart) && string.IsNullOrWhiteSpace(timebandEnd))
-                return false;
+            var results = new List<string>();
+            foreach (var record in reconciled)
+            {
+                results.Add($"{record.AdamsRow}|{record.IpsosRow}|{record.Status}");
+            }
 
-            if (!string.IsNullOrWhiteSpace(timebandStart) && string.IsNullOrWhiteSpace(timebandEnd))
-                timebandEnd = timebandStart;
-
-            bool isValidTime = DateTime.TryParse(TimeFormatter(timebandStart), out DateTime tbStart);
-            if (!isValidTime)
-                return false;
-
-            isValidTime = DateTime.TryParse(TimeFormatter(timebandEnd), out DateTime tbEnd);
-            if(!isValidTime)
-                return false;
-
-            isValidTime = DateTime.TryParse(ipsosTime, out DateTime ipsos);
-            if (!isValidTime)
-                return false;
-
-            if (tbStart == tbEnd)
-                tbEnd = tbEnd.Add(new TimeSpan(1, 0, 0));
-
-            return ipsos.TimeOfDay >= tbStart.TimeOfDay && ipsos.TimeOfDay <= tbEnd.TimeOfDay;
-        }*/
-
-        private string TimeFormatter(string time)
-        {
-            time = time.Trim();
-            if (time.Contains('.'))
-                time = time.Replace('.', ':');
-            if (!time.Contains(":"))
-                time = time.Substring(0, time.Length - 2).Trim() + ":00" + time.Substring(time.Length - 2);
-
-            return time;
+            return results;
         }
     }
 
@@ -94,7 +46,7 @@ namespace TimeBandChecker
         }
     }
 
-    public static class DateTimeExtensions
+    internal static class DateTimeExtensions
     {
         private static readonly GregorianCalendar _gc = new GregorianCalendar();
         public static int GetWeekOfMonth(this DateTime time)
