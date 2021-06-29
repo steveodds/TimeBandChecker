@@ -8,7 +8,6 @@ namespace TimeBandChecker
     {
         private readonly List<string> _adamsData;
         private readonly List<string> _ipsosData;
-        private List<string> finalList;
         private List<Adams> adamsRecords;
         private List<Ipsos> ipsosRecords;
         private List<Reconciled> reconciledRecords;
@@ -87,7 +86,7 @@ namespace TimeBandChecker
                         new Reconciled()
                         {
                             IpsosRow = ipsos.Row,
-                            Status = "FALSE"
+                            Status = "ROS"
                         }
                         );
                 }
@@ -206,11 +205,10 @@ namespace TimeBandChecker
                     {
                         Row = tempModel[0],
                         VariantName = tempModel[1],
-                        Material = tempModel[2],
-                        TimebandStart = tempModel[3],
-                        TimebandEnd = tempModel[4],
-                        HasTimeband = bool.Parse(tempModel[5]),
-                        MappedSubBrand = tempModel[6]
+                        TimebandStart = tempModel[2],
+                        TimebandEnd = tempModel[3],
+                        HasTimeband = bool.Parse(tempModel[4]),
+                        MappedSubBrand = tempModel[5]
                     }
                     );
             }

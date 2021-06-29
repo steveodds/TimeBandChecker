@@ -10,7 +10,6 @@ namespace TimeBandChecker
     {
         public string Row { get; set; }
         public string VariantName { get; set; }
-        public string Material { get; set; }
         public string TimebandStart { get; set; }
         public string TimebandEnd { get; set; }
         public bool HasTimeband { get; set; }
