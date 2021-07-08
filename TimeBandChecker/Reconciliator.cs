@@ -15,15 +15,17 @@ namespace TimeBandChecker
         {
             _adamsData = adamsData;
             _ipsosData = ipsosData;
-            finalList = new List<string>();
             adamsRecords = new List<Adams>();
             ipsosRecords = new List<Ipsos>();
+            reconciledRecords = new List<Reconciled>();
             GenerateRecords();
         }
 
         public List<Reconciled> Reconcile()
         {
-            foreach (var adams in adamsRecords)
+            var tempAdams = new List<Adams>();
+            tempAdams.AddRange(adamsRecords);
+            foreach (var adams in tempAdams)
             {
                 if (adams.HasTimeband)
                 {
@@ -35,7 +37,7 @@ namespace TimeBandChecker
                 }
             }
 
-            if (adamsRecords.Count > 0)
+            if (adamsRecords.Count > 0 || ipsosRecords.Count > 0)
                 ProcessLastRecords();
 
             return reconciledRecords;
@@ -43,9 +45,13 @@ namespace TimeBandChecker
 
         private void ProcessLastRecords()
         {
-            foreach (var adams in adamsRecords)
+            var tempAdams = new List<Adams>();
+            tempAdams.AddRange(adamsRecords);
+            var tempIpsos = new List<Ipsos>();
+            tempIpsos.AddRange(ipsosRecords);
+            foreach (var adams in tempAdams)
             {
-                foreach (var ipsos in ipsosRecords)
+                foreach (var ipsos in tempIpsos)
                 {
                     if (IsROS(adams.TimebandStart, adams.TimebandEnd, ipsos.IpsosTime))
                     {
@@ -64,9 +70,10 @@ namespace TimeBandChecker
                 }
             }
 
-            if(adamsRecords.Count > 0)
+            if (adamsRecords.Count > 0)
             {
-                foreach (var adams in adamsRecords)
+                tempAdams = adamsRecords;
+                foreach (var adams in tempAdams)
                 {
                     reconciledRecords.Add(
                         new Reconciled()
@@ -80,7 +87,8 @@ namespace TimeBandChecker
 
             if (ipsosRecords.Count > 0)
             {
-                foreach (var ipsos in ipsosRecords)
+                tempIpsos = ipsosRecords;
+                foreach (var ipsos in tempIpsos)
                 {
                     reconciledRecords.Add(
                         new Reconciled()
@@ -107,7 +115,7 @@ namespace TimeBandChecker
                         }
                         );
                 ipsosRecords.Remove(match);
-                adamsRecords.Remove(adams); 
+                adamsRecords.Remove(adams);
             }
 
         }
