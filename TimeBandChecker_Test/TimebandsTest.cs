@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace TimeBandChecker_Test
 {
@@ -8,134 +9,122 @@ namespace TimeBandChecker_Test
         [TestMethod]
         public void ValidTimeTest()
         {
-            var timebandStart = "9AM";
-            var timebandEnd= "";
-            var ipsos = "09:22";
+            var testAdams = new List<string>()
+            {
+                "2|STA SOFT|9AM|9.30AM|true|STA-SOFT REFIL PACK",
+                "3|STA SOFT|9AM|9.30AM|true|STA-SOFT REFIL PACK",
+                "8|STA SOFT|10AM|10.30AM|true|STA-SOFT REFIL PACK",
+                "61|STA SOFT|3PM|3.30PM|true|STA-SOFT REFIL PACK",
+                "108|STA SOFT|4PM|4.30PM|true|STA-SOFT REFIL PACK",
+                "114|STA SOFT|10AM|10.30AM|true|STA-SOFT REFIL PACK",
+                "115|STA SOFT|10AM|10.30AM|true|STA-SOFT REFIL PACK",
+                "129|STA SOFT|3.30PM|4PM|true|STA-SOFT REFIL PACK",
+                "173|CDC|7:30PM | 10:00PM | true | COLGATE DENTAL CREAM",
+                "204 | CDC | 9:00AM | 12:55PM | true | COLGATE DENTAL CREAM",
+                "262 | CDC | 11AM | 1PM | true | COLGATE DENTAL CREAM",
+                "285 | CDC | 8:00AM | 4:00PM | true | COLGATE DENTAL CREAM",
+                "321 | CDC | 7:30PM | 8:50PM | true | COLGATE DENTAL CREAM",
+                "333 | CDC | 6:00PM | 7:00PM | true | COLGATE DENTAL CREAM",
+                "335 | CDC | 9:00PM | 10:00PM | true | COLGATE DENTAL CREAM",
+                "357 | CDC | 7:30PM | 8:50PM | true | COLGATE DENTAL CREAM",
+                "387 | CDC | 7:30PM | 8:55PM | true | COLGATE DENTAL CREAM",
+                "412 | CDC | 7:30PM | 8:50PM | true | COLGATE DENTAL CREAM",
+                "433 | CDC | 9:00PM | 10:00PM | true | COLGATE DENTAL CREAM",
+                "457 | CDC | 6:00PM | 7:00PM | true | COLGATE DENTAL CREAM",
+                "472 | CDC | 6:00PM | 10:00PM | true | COLGATE DENTAL CREAM",
+                "489 | COLGATE HERBAL | 9:00PM | 10:00PM | true | COLGATE HERBAL",
+                "495 | COLGATE HERBAL | 8:00PM | 8:50PM | true | COLGATE HERBAL",
+                "528 | COLGATE HERBAL | 3:00PM | 5:00PM | true | COLGATE HERBAL",
+                "540 | COLGATE HERBAL | 6:55PM | 7:00PM | true | COLGATE HERBAL",
+                "581 | COLGATE HERBAL | 7:30PM | 8:50PM | true | COLGATE HERBAL",
+                "594 | COLGATE HERBAL | 6:00PM | 7:00PM | true | COLGATE HERBAL",
+                "615 | COLGATE HERBAL | 6:00PM | 10:00PM | true | COLGATE HERBAL",
+                "668 | PROTEX | 7:00 AM | 9:00 AM | true | PROTEX DEEP CLEAN",
+                "699 | PROTEX | BRANDED INTRO & OUTRO DURING THE SHOW | 9:00 AM | false | PROTEX DEEP CLEAN",
+                "700 | PROTEX | BRANDED INTRO & OUTRO DURING THE SHOW | 9:00 AM | false | PROTEX DEEP CLEAN",
+                "705 | PROTEX | SPOT BUY - LAST AD IN BOTH MOTHER IN LAW AD BREAKS| 9:00 AM | false | PROTEX DEEP CLEAN",
+                "710 | PROTEX | SPOT BUY - LAST AD IN BOTH MOTHER IN LAW AD BREAKS| 9:00 AM | false | PROTEX DEEP CLEAN",
+                "715 | PROTEX | BRANDED INTRO & OUTRO DURING THE SHOW | 9:00 AM | false | PROTEX DEEP CLEAN",
+                "720 | PROTEX | BRANDED INTRO & OUTRO DURING THE SHOW | 9:00 AM | false | PROTEX DEEP CLEAN",
+                "759 | PROTEX | SPOT BUY - LAST AD IN THE AD BREAK | 9:00 AM | false | PROTEX DEEP CLEAN",
+                "776 | PROTEX | 7:00 AM | 9:00 AM | true | PROTEX DEEP CLEAN",
+                "817 | PROTEX | 7:00AM | 10:00AM | true | PROTEX DEEP CLEAN",
+                "828 | PROTEX | 10:00AM | 1:00PM | true | PROTEX DEEP CLEAN",
+                "848 | PROTEX | 1:00PM | 4:00PM | true | PROTEX DEEP CLEAN",
+                "852 | PROTEX | 7PM | 7PM | true | PROTEX DEEP CLEAN",
+                "872 | PROTEX | 7:50PM | 8:50PM | true | PROTEX DEEP CLEAN",
+                "886 | PROTEX | 9:00PM | 10:00PM | true | PROTEX DEEP CLEAN",
+                "911 | PROTEX | 6:30PM | 10:00PM | true | PROTEX DEEP CLEAN",
+                "929 | PROTEX | 11:00AM | 1:00PM | true | PROTEX DEEP CLEAN",
+                "949 | PROTEX | 1:00PM | 4:00PM | true | PROTEX DEEP CLEAN",
+                "953 | PROTEX | 2:00PM | 5:00PM | true | PROTEX DEEP CLEAN",
+                "955 | PROTEX | 2:00PM | 5:00PM | true | PROTEX DEEP CLEAN",
+                "962 | PROTEX | 2:00PM | 5:00PM | true | PROTEX DEEP CLEAN",
+                "969 | PROTEX | 6:00PM | 7:00PM | true | PROTEX DEEP CLEAN",
+                "988 | PROTEX | 9:00PM | 10:00PM | true | PROTEX DEEP CLEAN",
+                "1006 | CDC | 9PM | 9PM | true | COLGATE AND WELLBORING WATER INNITIATIVE",
+                "1066 | CDC | 4:00PM | 7:00PM | true | COLGATE DENTAL CREAM",
+            };
+
+            var testIpsos = new List<string>()
+            {
+                "61|12:03:57 | PROTEX DEEP CLEAN",
+                "62 | 16:27:55 | COLGATE HERBAL",
+                "63 | 19:49:56 | PROTEX DEEP CLEAN",
+                "154 | 07:32:07 | PROTEX DEEP CLEAN",
+                "155 | 21:55:18 | COLGATE DENTAL CREAM",
+                "156 | 19:28:44 | COLGATE DENTAL CREAM",
+                "231 | 10:02:04 | STA - SOFT REFIL PACK",
+                "232 | 13:54:45 | PROTEX DEEP CLEAN",
+                "233 | 08:00:55 | STA - SOFT REFIL PACK",
+                "234 | 18:57:01 | COLGATE HERBAL",
+                "235 | 19:55:04 | COLGATE DENTAL CREAM",
+                "236 | 18:56:46 | PROTEX DEEP CLEAN",
+                "237 | 21:48:50 | PROTEX DEEP CLEAN",
+                "238 | 11:59:10 | COLGATE DENTAL CREAM",
+                "239 | 20:54:33 | COLGATE HERBAL",
+                "338 | 10:00:19 | STA - SOFT REFIL PACK",
+                "339 | 14:46:26 | PROTEX DEEP CLEAN",
+                "340 | 18:42:35 | PROTEX DEEP CLEAN",
+                "341 | 19:51:26 | COLGATE DENTAL CREAM",
+                "342 | 21:48:29 | COLGATE DENTAL CREAM",
+                "343 | 21:50:05 | COLGATE HERBAL",
+                "344 | 19:44:27 | PROTEX DEEP CLEAN",
+                "433 | 12:42:00 | COLGATE DENTAL CREAM",
+                "434 | 12:01:17 | COLGATE DENTAL CREAM",
+                "435 | 14:18:43 | PROTEX DEEP CLEAN",
+                "436 | 18:40:20 | COLGATE HERBAL",
+                "437 | 16:10:22 | STA - SOFT REFIL PACK",
+                "535 | 19:52:53 | PROTEX DEEP CLEAN",
+                "536 | 22:03:00 | COLGATE DENTAL CREAM",
+                "537 | 20:33:08 | COLGATE DENTAL CREAM",
+                "538 | 19:56:21 | PROTEX DEEP CLEAN",
+                "626 | 21:52:52 | PROTEX DEEP CLEAN",
+                "708 | 16:29:25 | STA - SOFT REFIL PACK",
+                "709 | 07:31:52 | STA - SOFT REFIL PACK",
+                "710 | 12:59:39 | PROTEX DEEP CLEAN",
+                "711 | 21:34:35 | COLGATE AND WELLBORING WATER INNITIATIVE",
+                "712 | 20:09:44 | COLGATE DENTAL CREAM",
+                "811 | 18:53:39 | COLGATE DENTAL CREAM",
+                "812 | 12:00:21 | PROTEX DEEP CLEAN",
+                "813 | 16:02:04 | STA - SOFT REFIL PACK",
+                "814 | 18:27:10 | COLGATE DENTAL CREAM",
+                "815 | 19:44:29 | COLGATE HERBAL",
+                "816 | 20:05:12 | COLGATE DENTAL CREAM",
+                "908 | 14:23:01 | PROTEX DEEP CLEAN",
+                "909 | 20:28:05 | COLGATE HERBAL",
+                "910 | 20:20:25 | COLGATE DENTAL CREAM",
+                "911 | 20:53:28 | COLGATE DENTAL CREAM",
+                "1011 | 14:47:58 | PROTEX DEEP CLEAN",
+                "1012 | 08:02:10 | STA - SOFT REFIL PACK",
+                "1013 | 13:19:23 | COLGATE DENTAL CREAM",
+                "1014 | 09:02:29 | PROTEX DEEP CLEAN",
+                "1015 | 20:01:47 | PROTEX DEEP CLEAN",
+            };
 
             var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void ValidTimeTestMilitaryTime()
-        {
-            var timebandStart = "2PM";
-            var timebandEnd = "2.30PM";
-            var ipsos = "14:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void MilitaryTimeTest()
-        {
-            var timebandStart = "18:00";
-            var timebandEnd = "18:45";
-            var ipsos = "18:02";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void OutsideTimebandTest()
-        {
-            var timebandStart = "9AM";
-            var timebandEnd = "9.30AM";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
-        }
-        
-        [TestMethod]
-        public void InvalidTimeTest()
-        {
-            var timebandStart = "random";
-            var timebandEnd = "word";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
-        }
-        
-        [TestMethod]
-        public void NullTimeTest()
-        {
-            var timebandStart = "9AM";
-            var timebandEnd = "";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsWithinTimebandRange(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
-        }
-
-        //ROS TESTS
-        [TestMethod]
-        public void ValidROSValue()
-        {
-            var timebandStart = "9AM";
-            var timebandEnd = "10am";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void ValidUnderROSValue()
-        {
-            var timebandStart = "10:30AM";
-            var timebandEnd = "11:00am";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void InvalidOverROSValue()
-        {
-            var timebandStart = "9AM";
-            var timebandEnd = "9:30am";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void InvalidUnderROSValue()
-        {
-            var timebandStart = "11:30AM";
-            var timebandEnd = "12:30pm";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void WithinRangeButNotROS()
-        {
-            var timebandStart = "9AM";
-            var timebandEnd = "10:30am";
-            var ipsos = "10:22";
-
-            var checker = new TimeBandChecker.TimeBandChecker();
-            var result = checker.IsROS(timebandStart, timebandEnd, ipsos);
-            Assert.IsFalse(result);
+            var result = checker.Reconcile(testAdams, testIpsos);
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }
